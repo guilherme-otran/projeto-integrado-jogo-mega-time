@@ -12,130 +12,159 @@ namespace Projeto_PI
 {
     public partial class Form1 : Form
     {
-        private GroupedBet bet;
-        private GroupedBetRepository repo;
+        private Color selectedColor = Color.BlueViolet;
+        private GameControl gameController;
         private IEnumerable<Button> betButtons;
 
         public Form1()
         {
             InitializeComponent();
-
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            gameController = new GameControl();
 
             IEnumerable<Button> buttons = this.Controls.OfType<Button>();
-
             betButtons = buttons.Where(btn => btn.Name.StartsWith("button"));
-            bet = new GroupedBet(betButtons);
-            repo = new GroupedBetRepository();
-            resetForm();
+
+            foreach (var btn in betButtons)
+            {
+                btn.Click += betBtn_Click;
+            }
+
+            initialState();
         }
 
-        private void btnMakeBet_Click(object sender, EventArgs e)
+        void betBtn_Click(object sender, EventArgs e)
         {
-            if (bet.validate())
+            Button betBtn = (Button)sender;
+            string betStr = betBtn.Text;
+
+            if (gameController.BetIsChoiced(betStr))
+                gameController.RemoveBet(betStr);
+            else
+                gameController.AddBet(betStr);
+
+            reloadColors();
+        }
+
+        private void resetGame()
+        {
+            gameController.Reset();
+            reloadColors();
+        }
+
+        private void reloadColors()
+        {
+            foreach (var betBtn in betButtons)
             {
-                Decimal value = bet.betPrice();
-
-                string message = "O valor da sua aposta é " + value.ToString("C") + ".\nConfirmar?";
-                bool accepted = MessageBox.Show(message, "Confirmar Aposta", MessageBoxButtons.YesNo) == DialogResult.Yes;
-
-                if (accepted)
-                {
-                    long protocol = repo.storeGroupedBet(bet);
-                    showReceipt(bet, protocol);
-                    resetForm();
-                }
+                if (gameController.BetIsChoiced(betBtn.Text))
+                    betBtn.BackColor = selectedColor;
+                else
+                    betBtn.BackColor = default(Color);
             }
+        }
+
+        private void initialState()
+        {
+            btnNewBet.Enabled = true;
+            btnMakeBet.Enabled = false;
+            btnCheckBet.Enabled = true;
+            txtBetProt.Enabled = true;
+            txtBetProt.Clear();
+
+            foreach (var betBtn in betButtons) { betBtn.Enabled = false; }
+            resetGame();
         }
 
         private void btnNewBet_Click(object sender, EventArgs e)
         {
-
-            txtBetProt.Clear();
-            txtBetProt.Enabled = false;
-
-            bet.unblock();
-            
+            // New Game State
+            btnNewBet.Enabled = false;
             btnMakeBet.Enabled = true;
             btnCheckBet.Enabled = false;
-            btnNewBet.Enabled = false;
+            txtBetProt.Enabled = false;
+            txtBetProt.Clear();
 
+            foreach (var betBtn in betButtons) { betBtn.Enabled = true; }
+            resetGame();
+        }
+
+        private void btnMakeBet_Click(object sender, EventArgs e)
+        {
+            if (gameController.storeGame())
+            {
+                showReceipt();
+                initialState();
+            }
+            else
+            {
+                var errorsStr = gameController.gameErrors().Aggregate((src, acc) => src + "\n" + acc);
+                MessageBox.Show(errorsStr, "Jogo não registrado");
+            }
+            
         }
 
         private void btnCheckBet_Click(object sender, EventArgs e)
         {
-            long protocol;
-            bet.reset();
-
-            if (long.TryParse(txtBetProt.Text, out protocol))
+            try 
             {
-                try
-                {
-                    repo.loadGroupedBet(bet, protocol);
-                    showReceipt(bet, protocol);
-                }
-                catch (GroupedBetRepository.BetNotFound)
-                {
-                    MessageBox.Show("Protocolo Inexistente no Órgão Regulador", "Protocolo Inválido");
-                }
-            }
-            else
+                gameController.LoadGame(txtBetProt.Text);
+                reloadColors();
+                showReceipt();
+            } 
+            catch (GameControl.GameNotFound)
             {
-                MessageBox.Show("Número do protocolo mal formado.", "Protocolo Inválido");
+                MessageBox.Show("Verifique o número do protocolo.", "Jogo não registrado.");
             }
 
+            initialState();
         }
 
-        private void resetForm()
-        {
 
-            bet.reset();
-            btnMakeBet.Enabled = false;
-            btnCheckBet.Enabled = true;
-            btnNewBet.Enabled = true;
-            txtBetProt.Clear();
-            txtBetProt.Enabled = true;
-        }
-
-        private void txtBetProt_TextChanged(object sender, EventArgs e)
+        private void showReceipt()
         {
-            bet.reset();
-        }
+            Game game = gameController.game;
+            long protocol = game.protocol;
 
-        private void btnClear_Click(object sender, EventArgs e)
-        {
-            resetForm();
-            
-        }
-
-        private void showReceipt(GroupedBet bet, long protocol)
-        {
             string receipt = "JOGO MEGA TIME\n";
             receipt += identate("Protocolo:") + protocol.ToString() + "\n\n";
 
             receipt += identate("Dezenas:");
-            receipt += bet.betNumbers()
-                           .Select(num => String.Format("{0:00}", num))
+            receipt += game.bets
+                           .Select(bet => bet.number)
                            .Aggregate((src, acc) => src + ", " + acc);
             receipt += "\n\n";
 
-            receipt += bet.teams.Where(team => team.isBeated())
-                           .Select(team => identate(team.name() + ":") + team.countBets())
+            receipt += game.betedTeams
+                           .Select(group => identate(group.Key.abbr + ":") + group.Count().ToString())
                            .Aggregate((src, acc) => src + "\n" + acc);
 
             receipt += "\n\n";
-            receipt += identate("Valor:") + bet.betPrice().ToString("C");
+            receipt += identate("Valor:") + game.Price().ToString("C");
 
             MessageBox.Show(receipt, "Recibo de Aposta");
-            resetForm();
         }
 
         private string identate(string str)
         {
             return str.Length < 11 ? str + "\t\t" : str + "\t";
+        }
+
+        private void txtBetProt_TextChanged(object sender, EventArgs e)
+        {
+            btnNewBet.Enabled = true;
+            btnMakeBet.Enabled = false;
+            btnCheckBet.Enabled = true;
+
+            foreach (var betBtn in betButtons) { betBtn.Enabled = false; }
+            resetGame();
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            initialState();
         }
     }
 }
