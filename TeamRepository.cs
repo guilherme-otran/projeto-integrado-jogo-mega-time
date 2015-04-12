@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Projeto_PI
 {
-    class TeamRepository
+    public class TeamRepository
     {
         private string[] ABBRS = { "CAM", "CAP", "BAH", "BOT", "CEA", 
                                    "COR", "CFC", "CRU", "FLA", "FLU",

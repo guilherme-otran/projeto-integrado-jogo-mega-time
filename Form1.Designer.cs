@@ -133,6 +133,7 @@
             this.btnNewBet = new System.Windows.Forms.Button();
             this.txtBetProt = new System.Windows.Forms.TextBox();
             this.btnClear = new System.Windows.Forms.Button();
+            this.labCost = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button1
@@ -1172,7 +1173,6 @@
             this.txtBetProt.Name = "txtBetProt";
             this.txtBetProt.Size = new System.Drawing.Size(76, 20);
             this.txtBetProt.TabIndex = 103;
-            this.txtBetProt.TextChanged += new System.EventHandler(this.txtBetProt_TextChanged);
             // 
             // btnClear
             // 
@@ -1184,11 +1184,22 @@
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
+            // labCost
+            // 
+            this.labCost.AutoSize = true;
+            this.labCost.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labCost.Location = new System.Drawing.Point(300, 39);
+            this.labCost.Name = "labCost";
+            this.labCost.Size = new System.Drawing.Size(101, 16);
+            this.labCost.TabIndex = 105;
+            this.labCost.Text = "Valor: R$ XX,XX";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(715, 371);
+            this.Controls.Add(this.labCost);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.txtBetProt);
             this.Controls.Add(this.btnNewBet);
@@ -1409,6 +1420,7 @@
         private System.Windows.Forms.Button btnNewBet;
         private System.Windows.Forms.TextBox txtBetProt;
         private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.Label labCost;
 
     }
 }

@@ -64,6 +64,8 @@ namespace Projeto_PI
                 else
                     betBtn.BackColor = default(Color);
             }
+
+            labCost.Text = "Valor: " + gameController.gamePrice().ToString("C");
         }
 
         private void initialState()
@@ -71,6 +73,7 @@ namespace Projeto_PI
             btnNewBet.Enabled = true;
             btnMakeBet.Enabled = false;
             btnCheckBet.Enabled = true;
+            labCost.Visible = false;
             txtBetProt.Enabled = true;
             txtBetProt.Clear();
 
@@ -84,6 +87,7 @@ namespace Projeto_PI
             btnNewBet.Enabled = false;
             btnMakeBet.Enabled = true;
             btnCheckBet.Enabled = false;
+            labCost.Visible = true;
             txtBetProt.Enabled = false;
             txtBetProt.Clear();
 
@@ -111,6 +115,7 @@ namespace Projeto_PI
             try 
             {
                 gameController.LoadGame(txtBetProt.Text);
+                labCost.Visible = true;
                 reloadColors();
                 showReceipt();
             } 
@@ -129,9 +134,9 @@ namespace Projeto_PI
             long protocol = game.protocol;
 
             string receipt = "JOGO MEGA TIME\n";
-            receipt += identate("Protocolo:") + protocol.ToString() + "\n\n";
+            receipt += "PROTOCOLO:\t" + protocol.ToString() + "\n\n";
 
-            receipt += identate("Dezenas:");
+            receipt += identate("DEZENAS:");
             receipt += game.bets
                            .Select(bet => bet.number)
                            .Aggregate((src, acc) => src + ", " + acc);
@@ -142,7 +147,7 @@ namespace Projeto_PI
                            .Aggregate((src, acc) => src + "\n" + acc);
 
             receipt += "\n\n";
-            receipt += identate("Valor:") + game.Price().ToString("C");
+            receipt += identate("VALOR:") + game.Price().ToString("C");
 
             MessageBox.Show(receipt, "Recibo de Aposta");
         }
@@ -150,16 +155,6 @@ namespace Projeto_PI
         private string identate(string str)
         {
             return str.Length < 11 ? str + "\t\t" : str + "\t";
-        }
-
-        private void txtBetProt_TextChanged(object sender, EventArgs e)
-        {
-            btnNewBet.Enabled = true;
-            btnMakeBet.Enabled = false;
-            btnCheckBet.Enabled = true;
-
-            foreach (var betBtn in betButtons) { betBtn.Enabled = false; }
-            resetGame();
         }
 
         private void btnClear_Click(object sender, EventArgs e)

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Projeto_PI
 {
-    class GameValidator
+    public class GameValidator
     {
         private Game game;
         public IEnumerable<String> errors { get; private set; }

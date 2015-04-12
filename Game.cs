@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace Projeto_PI
 {
-    class Game
+    public class Game
     {
         public IEnumerable<BetNumber> bets { get; private set; }
         public IEnumerable<Team> teams
@@ -48,7 +48,7 @@ namespace Projeto_PI
             Decimal price = Decimal.Parse("5");
             Decimal secondPrice = Decimal.Parse("0,75");
             Decimal lastPrice = Decimal.Parse("2,25");
-            Decimal fullPrice = Decimal.Parse("7,0");
+            Decimal fullPrice = Decimal.Parse("4,0");
             Decimal teamAdd = Decimal.Parse("1,25");
 
             int pendingToCalc = totalBets - 10;

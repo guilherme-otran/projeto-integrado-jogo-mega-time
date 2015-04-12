@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Projeto_PI
 {
-    class BetNumberRepository
+    public class BetNumberRepository
     {
         private TeamRepository teamRepo;
         private const int BET_BY_TEAM = 4;
