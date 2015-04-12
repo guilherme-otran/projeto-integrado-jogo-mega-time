@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Projeto-PI", "Projeto-PI.csproj", "{AFC5CB30-4A76-42AD-A05A-E1CD269C70A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Projeto-PI-Tests", "..\Projeto-PI-Tests\Projeto-PI-Tests.csproj", "{8C2CA883-136B-4AFA-861A-9AE6F409003A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Projeto-PI-tests", "..\Projeto-PI-tests\Projeto-PI-tests.csproj", "{2541095F-E1EA-4966-BE90-59C670019DB5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{AFC5CB30-4A76-42AD-A05A-E1CD269C70A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFC5CB30-4A76-42AD-A05A-E1CD269C70A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFC5CB30-4A76-42AD-A05A-E1CD269C70A0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8C2CA883-136B-4AFA-861A-9AE6F409003A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8C2CA883-136B-4AFA-861A-9AE6F409003A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8C2CA883-136B-4AFA-861A-9AE6F409003A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8C2CA883-136B-4AFA-861A-9AE6F409003A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2541095F-E1EA-4966-BE90-59C670019DB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2541095F-E1EA-4966-BE90-59C670019DB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2541095F-E1EA-4966-BE90-59C670019DB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2541095F-E1EA-4966-BE90-59C670019DB5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
