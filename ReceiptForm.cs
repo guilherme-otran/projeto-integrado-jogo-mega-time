@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Projeto_PI
 {
-    public class ReceiptForm : Form
+    public partial class ReceiptForm : Form
     {
         public ReceiptForm(string message)
         {
