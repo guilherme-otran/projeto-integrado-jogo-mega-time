@@ -8,11 +8,11 @@ namespace Projeto_PI
 {
     public class TeamRepository
     {
-        private string[] ABBRS = { "CAM", "CAP", "BAH", "BOT", "CEA", 
-                                   "COR", "CFC", "CRU", "FLA", "FLU",
-                                   "FOR", "GOI", "GRE", "GUA", "INT",
-                                   "NAU", "PAL", "PRC", "APP", "SCR",
-                                   "SAN", "SAO", "SPO", "VAS", "VIT" };
+        private string[] ABBRS = { "ATLETICO MG", "ATLETICO PR", "BAHIA", "BOTAFOGO", "CEARA", 
+                                   "CORINTHIANS", "CORITIBA", "CRUZEIRO", "FLAMENGO", "FLUMINENSE",
+                                   "FORTALEZA", "GOIAS", "GREMIO", "GUARANI", "INTERNACIONAL",
+                                   "NAUTICO", "PALMEIRAS", "PARANA CLUBE", "PONTE PRETA", "SANTA CRUZ",
+                                   "SANTOS", "SAO PAULO", "SPORT", "VASCO DA GAMA", "VITORIA" };
 
         public IEnumerable<Team> availableTeams()
         {

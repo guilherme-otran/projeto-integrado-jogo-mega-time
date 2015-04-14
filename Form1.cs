@@ -134,7 +134,7 @@ namespace Projeto_PI
             long protocol = game.protocol;
 
             string receipt = "JOGO MEGA TIME\n";
-            receipt += "PROTOCOLO:\t" + protocol.ToString() + "\n\n";
+            receipt += identate("PROTOCOLO:") + protocol.ToString() + "\n\n";
 
             receipt += identate("DEZENAS:");
             receipt += game.bets
@@ -149,12 +149,15 @@ namespace Projeto_PI
             receipt += "\n\n";
             receipt += identate("VALOR:") + game.Price().ToString("C");
 
-            MessageBox.Show(receipt, "Recibo de Aposta");
+            (new ReceiptForm(receipt)).ShowDialog();
         }
 
         private string identate(string str)
         {
-            return str.Length < 11 ? str + "\t\t" : str + "\t";
+            if (str.Length > 13)
+                return str;
+
+            return str.Length < 7 ? str + "\t\t" : str + "\t";
         }
 
         private void btnClear_Click(object sender, EventArgs e)
