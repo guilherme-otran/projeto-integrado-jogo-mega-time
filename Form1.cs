@@ -142,6 +142,8 @@ namespace Projeto_PI
             receipt += "\n\n";
 
             receipt += game.betedTeams
+                            // Sort teams by name
+                           .OrderBy(group => group.Key.abbr)
                            .Select(group => identate(group.Key.abbr + ":") + 
                                             "(" + group.Count().ToString() + ") " +
                                             aggregateBets(group.ToList()))
@@ -155,8 +157,10 @@ namespace Projeto_PI
 
         private string aggregateBets(IEnumerable<BetNumber> bets)
         {
-            return bets.Select(bet => bet.number)
-                           .Aggregate((src, acc) => src + ", " + acc);
+            // Force 00 as last
+            return bets.OrderBy(bet => (bet.number.Equals("00")) ? "999" : bet.number)
+                .Select(bet => bet.number)
+                .Aggregate((src, acc) => src + ", " + acc);
         }
 
         private string identate(string str)
