@@ -137,19 +137,26 @@ namespace Projeto_PI
             receipt += identate("PROTOCOLO:") + protocol.ToString() + "\n\n";
 
             receipt += identate("DEZENAS:");
-            receipt += game.bets
-                           .Select(bet => bet.number)
-                           .Aggregate((src, acc) => src + ", " + acc);
+            receipt += aggregateBets(game.bets);
+                           
             receipt += "\n\n";
 
             receipt += game.betedTeams
-                           .Select(group => identate(group.Key.abbr + ":") + group.Count().ToString())
+                           .Select(group => identate(group.Key.abbr + ":") + 
+                                            "(" + group.Count().ToString() + ") " +
+                                            aggregateBets(group.ToList()))
                            .Aggregate((src, acc) => src + "\n" + acc);
 
             receipt += "\n\n";
             receipt += identate("VALOR:") + game.Price().ToString("C");
 
             (new ReceiptForm(receipt)).ShowDialog();
+        }
+
+        private string aggregateBets(IEnumerable<BetNumber> bets)
+        {
+            return bets.Select(bet => bet.number)
+                           .Aggregate((src, acc) => src + ", " + acc);
         }
 
         private string identate(string str)
