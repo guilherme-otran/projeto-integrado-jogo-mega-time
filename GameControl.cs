@@ -8,7 +8,8 @@ namespace Projeto_PI
 {
     class GameControl
     {
-        private BetNumberRepository betRepo = new BetNumberRepository();
+        private TeamRepository teamRepo = new TeamRepository();
+        private BetNumberRepository betRepo;
         private GameRepository gameRepo;
         
         public GameValidator gameValidator { get; private set; }
@@ -21,7 +22,8 @@ namespace Projeto_PI
             // Use same betRepo repository for everything
             // Prevent equality problems.
             // Prevent large memory usage.
-            this.gameRepo = new GameRepository(betRepo);
+            this.betRepo = new BetNumberRepository(teamRepo);
+            this.gameRepo = new GameRepository(teamRepo, betRepo);
 
             this.game = new Game();
             this.gameValidator = new GameValidator(game);

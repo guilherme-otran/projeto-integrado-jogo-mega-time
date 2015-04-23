@@ -58,6 +58,7 @@
     <Compile Include="Game.cs" />
     <Compile Include="GameControl.cs" />
     <Compile Include="GameRepository.cs" />
+    <Compile Include="WinnerResult.cs" />
     <Compile Include="GameValidator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

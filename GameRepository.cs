@@ -11,19 +11,17 @@ namespace Projeto_PI
     {
         private EndPoint endpoint;
         private BetNumberRepository betRepo;
+        private TeamRepository teamRepo;
 
         public class GameNotFound : System.NullReferenceException { };
         public class GameNotStored : System.NullReferenceException { };
+        public class GameResultNotFound : System.NullReferenceException { };
 
-        public GameRepository(BetNumberRepository betRepo = null)
+        public GameRepository(TeamRepository teamRepo, BetNumberRepository betRepo)
         {
-            if (betRepo == null)
-            {
-                 betRepo = new BetNumberRepository();
-            }
-
-            this.endpoint = new EndPoint();
+            this.teamRepo = teamRepo;
             this.betRepo = betRepo;
+            this.endpoint = new EndPoint();
         }
 
         public void storeGame(Game game)
@@ -51,9 +49,25 @@ namespace Projeto_PI
             game.protocol = protocol;
 
             var bets = betsString.Split(',').Select(betString => betRepo.find(betString));
-
+          
             foreach (var bet in bets)
                 game.AddBetNumber(bet);
+        }
+
+        public WinnerResult getWinnerResult()
+        {
+            var winnerResult = new WinnerResult();
+            var winnersString = endpoint.ObterTodosNumerosSorteados();
+            var winnerTeam = endpoint.obterNomeTimeSorteado();
+
+            if (winnersString == null || winnerTeam == null)
+                throw new GameResultNotFound();
+
+            var winners = winnersString.Split(',');
+            winnerResult.winnerNumbers = winners.Select(winner => betRepo.find(winner));
+            winnerResult.winnerTeam = teamRepo.findTeamByName(winnerTeam);
+
+            return winnerResult;
         }
     }
 }

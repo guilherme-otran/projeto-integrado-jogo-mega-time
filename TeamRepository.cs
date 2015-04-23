@@ -8,15 +8,25 @@ namespace Projeto_PI
 {
     public class TeamRepository
     {
+        private IEnumerable<Team> teams;
         private string[] ABBRS = { "ATLETICO MG", "ATLETICO PR", "BAHIA", "BOTAFOGO", "CEARA", 
                                    "CORINTHIANS", "CORITIBA", "CRUZEIRO", "FLAMENGO", "FLUMINENSE",
                                    "FORTALEZA", "GOIAS", "GREMIO", "GUARANI", "INTERNACIONAL",
                                    "NAUTICO", "PALMEIRAS", "PARANA CLUBE", "PONTE PRETA", "SANTA CRUZ",
                                    "SANTOS", "SAO PAULO", "SPORT", "VASCO DA GAMA", "VITORIA" };
+        public TeamRepository()
+        {
+            teams = ABBRS.Select(abbr => new Team(abbr)); 
+        }
 
         public IEnumerable<Team> availableTeams()
         {
-            return ABBRS.Select(abbr => new Team(abbr));
+            return teams;
+        }
+
+        public Team findTeamByName(string name)
+        {
+            return teams.First(team => name.ToUpper().StartsWith(team.abbr));
         }
     }
 }

@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using API_OrgaoRegulador;
 
 namespace Projeto_PI
 {
     public class BetNumberRepository
     {
+        private EndPoint apiEndpoint;
         private TeamRepository teamRepo;
         private const int BET_BY_TEAM = 4;
         private IEnumerable<BetNumber> betNumbers;
 
         public BetNumberRepository(TeamRepository teamRepo = null)
         {
+            apiEndpoint = new EndPoint();
             if (teamRepo != null)
             {
                 this.teamRepo = teamRepo;
