@@ -52,6 +52,16 @@ namespace Projeto_PI
           
             foreach (var bet in bets)
                 game.AddBetNumber(bet);
+
+            try
+            {
+                var winResult = getWinnerResult();
+                game.winnerResult = winResult;
+            } 
+            catch (GameResultNotFound)
+            {
+                game.winnerResult = null;
+            }
         }
 
         public WinnerResult getWinnerResult()
@@ -62,6 +72,15 @@ namespace Projeto_PI
 
             if (winnersString == null || winnerTeam == null)
                 throw new GameResultNotFound();
+
+            for (int i = 3; i <= 8; i++)
+            {
+                var award = Convert.ToDecimal(endpoint.obterPremioPorAcertos(i));
+                if (award.CompareTo(Decimal.Zero) <= 0)
+                    throw new GameResultNotFound();
+
+                winnerResult.awardValues.Add(i, award);
+            }
 
             var winners = winnersString.Split(',');
             winnerResult.winnerNumbers = winners.Select(winner => betRepo.find(winner));

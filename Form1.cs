@@ -151,7 +151,39 @@ namespace Projeto_PI
 
             receipt += "\n\n";
             receipt += identate("VALOR:") + game.Price().ToString("C");
+            receipt += "\n\n";
 
+            if (game.resultAvailable)
+            {
+                if (game.winned)
+                {
+                    receipt += "*********************************\n";
+                    receipt += "PARABÉNS, SEU JOGO FOI PREMIADO!!\n\n";
+                    receipt += "PRÊMIO POR DEZENAS SORTEADAS:\n";
+                    receipt += game.RafflePrize().ToString("C") + "\n\n";
+                    receipt += "PRÊMIO PELO TIME DA VEZ:\n";
+                    receipt += game.TeamPrize().ToString("C") + "\n\n";
+                    receipt += identate("VALOR TOTAL:") + game.Prize().ToString("C") + "\n";
+                    receipt += "*********************************\n\n";
+                }
+                else
+                {
+                    receipt += "JOGO NÃO PERMIADO.\n" +
+                               "Não foi desta vez. Tente em um próximo jogo.\n";
+                }
+                receipt += identate("TIME DA VEZ:") + game.winnerResult.winnerTeam.abbr + "\n";
+                receipt += "VALOR POR QTDE ACERTOS:\n";
+                receipt += game.winnerResult.awardValues
+                            .OrderBy(kv => kv.Key)
+                            .Select(kv => identate(kv.Key.ToString() + ":") +
+                                      kv.Value.ToString("C"))
+                            .Aggregate((src, acc) => src + "\n" + acc);
+            }
+            else
+            {
+                receipt += "AGUARDE PELO SORTEIO!!\n";
+            }
+            
             (new ReceiptForm(receipt)).ShowDialog();
         }
 

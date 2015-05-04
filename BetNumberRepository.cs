@@ -14,17 +14,10 @@ namespace Projeto_PI
         private const int BET_BY_TEAM = 4;
         private IEnumerable<BetNumber> betNumbers;
 
-        public BetNumberRepository(TeamRepository teamRepo = null)
+        public BetNumberRepository(TeamRepository teamRepo)
         {
             apiEndpoint = new EndPoint();
-            if (teamRepo != null)
-            {
-                this.teamRepo = teamRepo;
-            }
-            else
-            {
-                this.teamRepo = new TeamRepository();
-            }
+            this.teamRepo = teamRepo;
         }
 
         public IEnumerable<BetNumber> availableBetNumbers()

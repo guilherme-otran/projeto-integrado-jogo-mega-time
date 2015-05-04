@@ -10,5 +10,15 @@ namespace Projeto_PI
     {
         public IEnumerable<BetNumber> winnerNumbers;
         public Team winnerTeam;
+        public IDictionary<Int32, Decimal> awardValues
+        {
+            get;
+            private set;
+        }
+
+        public WinnerResult()
+        {
+            this.awardValues = new Dictionary<Int32, Decimal>();
+        }
     }
 }

@@ -9,6 +9,7 @@ namespace Projeto_PI
 {
     public class Game
     {
+        public WinnerResult winnerResult;
         public IEnumerable<BetNumber> bets { get; private set; }
         public IEnumerable<Team> teams
         {
@@ -23,6 +24,38 @@ namespace Projeto_PI
             get
             {
                 return bets.GroupBy(bet => bet.team, bet => bet);
+            }
+        }
+
+        public bool resultAvailable { get { return winnerResult != null; } }
+
+        public IEnumerable<BetNumber> winnedNumbersOnRaffle
+        {
+            get
+            {
+                return bets.Intersect(winnerResult.winnerNumbers);
+            }
+        }
+
+        public IEnumerable<BetNumber> winnedNumbersOnTeam
+        {
+            get
+            {
+                var winnerTeam = winnerResult.winnerTeam;
+                var teamNumbersGroup = betedTeams.FirstOrDefault(group => group.Key == winnerTeam);
+
+                if (teamNumbersGroup == null)
+                    return new List<BetNumber>();
+
+                return teamNumbersGroup.ToList();
+            }
+        }
+
+        public bool winned
+        {
+            get
+            {
+                return winnedNumbersOnRaffle.Count() > 2 || winnedNumbersOnTeam.Count() > 0;
             }
         }
 
@@ -75,6 +108,32 @@ namespace Projeto_PI
                 price = Decimal.Add(price, Decimal.Multiply(teamAdd, totalTeam));
             }
             return price;
+        }
+
+        public Decimal RafflePrize()
+        {   
+            Decimal rafflePrize;
+
+            var raffleCount = winnedNumbersOnRaffle.Count();
+            if (winnerResult.awardValues.TryGetValue(raffleCount, out rafflePrize))
+            {
+                return raffleCount;
+            }
+
+            return Decimal.Zero;
+        }
+
+        public Decimal TeamPrize()
+        {
+            Decimal prizeByTeam = Convert.ToDecimal(5.0);
+            var teamCount = winnedNumbersOnTeam.Count();
+
+            return Decimal.Multiply(prizeByTeam, teamCount);
+        }
+
+        public Decimal Prize()
+        {
+            return Decimal.Add(RafflePrize(), TeamPrize());
         }
 
         public void Reset()
