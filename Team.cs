@@ -8,7 +8,7 @@ using System.Windows.Forms;
 namespace Projeto_PI
 {
     
-    public class Team
+    public class Team : Object
     {
         public string abbr { get; private set; }
 

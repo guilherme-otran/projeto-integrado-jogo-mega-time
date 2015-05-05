@@ -219,7 +219,7 @@ namespace Projeto_PI_tests
 
         private Game buildGame(params string[] bets)
         {
-            var repo = new BetNumberRepository();
+            var repo = new BetNumberRepository(new TeamRepository());
             Game g = new Game();
 
             bets.ToList().ForEach(bet => g.AddBetNumber(repo.find(bet)));

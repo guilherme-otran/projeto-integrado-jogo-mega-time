@@ -54,6 +54,7 @@
     <Compile Include="GameTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameValidatorTest.cs" />
+    <Compile Include="TeamRepositoryTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Projeto-PI.csproj">

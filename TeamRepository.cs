@@ -16,17 +16,24 @@ namespace Projeto_PI
                                    "SANTOS", "SAO PAULO", "SPORT", "VASCO DA GAMA", "VITORIA" };
         public TeamRepository()
         {
-            teams = ABBRS.Select(abbr => new Team(abbr)); 
+            this.teams = null;
         }
 
         public IEnumerable<Team> availableTeams()
         {
+            if (teams == null)
+            {
+                this.teams = ABBRS.Select(abbr => new Team(abbr)); 
+            }
+
             return teams;
         }
 
         public Team findTeamByName(string name)
         {
-            return availableTeams().First(team => name.ToUpper().StartsWith(team.abbr));
+            //return availableTeams().ElementAt(23);
+            return availableTeams().Where(team => name.ToUpper().StartsWith(team.abbr)).ElementAt(0);
+            //return (Team) availableTeams().First();
         }
     }
 }
