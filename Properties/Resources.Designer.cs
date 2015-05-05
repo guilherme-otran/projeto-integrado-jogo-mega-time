@@ -61,11 +61,36 @@ namespace Projeto_PI.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 3=2,00
+        ///4=2,00
+        ///5=5,00
+        ///6=233,89
+        ///7=23445,92
+        ///8=155465,89
+        ///.
+        /// </summary>
+        internal static string PREMIOS {
+            get {
+                return ResourceManager.GetString("PREMIOS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NUMEROS=01,02,03,04,05,56,08,07
+        ///TIME=Vasco da Gama.
+        /// </summary>
+        internal static string RESULTADOS {
+            get {
+                return ResourceManager.GetString("RESULTADOS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Sem_título {
             get {
-                object obj = ResourceManager.GetObject("Sem título", resourceCulture);
+                object obj = ResourceManager.GetObject("Sem_título", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

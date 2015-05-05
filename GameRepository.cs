@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using API_OrgaoRegulador;
+using System.IO;
 
 namespace Projeto_PI
 {
@@ -21,6 +22,26 @@ namespace Projeto_PI
         {
             this.teamRepo = teamRepo;
             this.betRepo = betRepo;
+
+            if (!Directory.Exists("C:\\temp"))
+            {
+                Directory.CreateDirectory("C:\\temp");
+            }
+
+            if (!File.Exists("C:\\temp\\PREMIOS.TXT"))
+            {
+                StreamWriter outStream = File.CreateText("C:\\temp\\PREMIOS.TXT");
+                outStream.Write(Properties.Resources.PREMIOS);
+                outStream.Close();
+            }
+
+            if (!File.Exists("C:\\temp\\RESULTADOS.TXT"))
+            {
+                StreamWriter outStream = File.CreateText("C:\\temp\\RESULTADOS.TXT");
+                outStream.Write(Properties.Resources.RESULTADOS);
+                outStream.Close();
+            }
+
             this.endpoint = new EndPoint();
         }
 
