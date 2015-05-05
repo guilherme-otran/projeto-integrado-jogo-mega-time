@@ -42,7 +42,7 @@ namespace Projeto_PI
             get
             {
                 var winnerTeam = winnerResult.winnerTeam;
-                var teamNumbersGroup = betedTeams.FirstOrDefault(group => group.Key == winnerTeam);
+                var teamNumbersGroup = betedTeams.FirstOrDefault(group => group.Key.Equals(winnerTeam));
 
                 if (teamNumbersGroup == null)
                     return new List<BetNumber>();
@@ -117,7 +117,7 @@ namespace Projeto_PI
             var raffleCount = winnedNumbersOnRaffle.Count();
             if (winnerResult.awardValues.TryGetValue(raffleCount, out rafflePrize))
             {
-                return raffleCount;
+                return rafflePrize;
             }
 
             return Decimal.Zero;
@@ -138,6 +138,7 @@ namespace Projeto_PI
 
         public void Reset()
         {
+            this.winnerResult = null;
             var bets = (List<BetNumber>)this.bets;
             bets.Clear();
         }

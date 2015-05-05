@@ -17,5 +17,13 @@ namespace Projeto_PI
             this.abbr = abbr;
         }
 
+        public bool Equals(Object other)
+        {
+            if (other.GetType() != this.GetType())
+                return false;
+
+            return this.abbr.Equals(((Team)other).abbr);
+        }
+
     }
 }

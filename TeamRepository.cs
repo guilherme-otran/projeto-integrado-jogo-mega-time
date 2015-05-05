@@ -26,7 +26,7 @@ namespace Projeto_PI
 
         public Team findTeamByName(string name)
         {
-            return teams.First(team => name.ToUpper().StartsWith(team.abbr));
+            return availableTeams().First(team => name.ToUpper().StartsWith(team.abbr));
         }
     }
 }
